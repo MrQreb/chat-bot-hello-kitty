@@ -26,24 +26,24 @@ yarn tauri build
 
 ## Stack 
 <div style="display: flex; gap: 10px;">
-  <div style="width: 25px; height: 25px;">
+  <div style="width: 10px; height: 25px;">
     <a href="https://v2.tauri.app/" target="_blank">
-      <img src="https://svgl.app/library/tauri.svg" alt="Tauri" style="width: 25%; height: 25%;">
+      <img src="https://svgl.app/library/tauri.svg" alt="Tauri" style="width: 10%; height: 10%;">
     </a>
   </div>
-  <div style="width: 25px; height: 25px;">
+  <div style="width: 10px; height: 10px;">
     <a href="https://nextjs.org/" target="_blank">
-      <img src="https://svgl.app/library/nextjs_icon_dark.svg" alt="Next.js" style="width: 25%; height: 25%;">
+      <img src="https://svgl.app/library/nextjs_icon_dark.svg" alt="Next.js" style="width: 10%; height: 10%;">
     </a>
   </div>
-  <div style="width: 25px; height: 25px;">
+  <div style="width: 10px; height: 10px;">
     <a href="https://ui.shadcn.com/" target="_blank">
-      <img src="https://svgl.app/library/shadcn-ui_dark.svg" alt="Shadcn UI" style="width: 25%; height: 25%;">
+      <img src="https://svgl.app/library/shadcn-ui_dark.svg" alt="Shadcn UI" style="width: 10%; height: 10%;">
     </a>
   </div>
-  <div style="width: 25px; height: 25px;">
+  <div style="width: 10px; height: 10px;">
     <a href="https://tailwindcss.com/" target="_blank">
-      <img src="https://svgl.app/library/tailwindcss.svg" alt="Tailwind CSS" style="width: 25%; height: 25%;">
+      <img src="https://svgl.app/library/tailwindcss.svg" alt="Tailwind CSS" style="width: 10%; height: 10%;">
     </a>
   </div>
 </div>
