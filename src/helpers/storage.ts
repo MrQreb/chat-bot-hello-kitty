@@ -7,3 +7,7 @@ export async function saveMessages(message: string, who: string) {
 export async function getMessages() {
     return JSON.parse(localStorage.getItem('messages') || '[]');
 }
+
+export  function deleteMessages() {
+    localStorage.clear();
+}
