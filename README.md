@@ -26,22 +26,22 @@ yarn tauri build
 
 ## Stack 
 <div style="display: flex; gap: 10px;">
-  <div style="width: 100px; height: 100px;">
+  <div style="width: 25px; height: 25px;">
     <a href="https://v2.tauri.app/" target="_blank">
       <img src="https://svgl.app/library/tauri.svg" alt="Tauri" style="width: 100%; height: 100%;">
     </a>
   </div>
-  <div style="width: 100px; height: 100px;">
+  <div style="width: 25px; height: 25px;">
     <a href="https://nextjs.org/" target="_blank">
       <img src="https://svgl.app/library/nextjs_icon_dark.svg" alt="Next.js" style="width: 100%; height: 100%;">
     </a>
   </div>
-  <div style="width: 100px; height: 100px;">
+  <div style="width: 25px; height: 25px;">
     <a href="https://ui.shadcn.com/" target="_blank">
       <img src="https://svgl.app/library/shadcn-ui_dark.svg" alt="Shadcn UI" style="width: 100%; height: 100%;">
     </a>
   </div>
-  <div style="width: 100px; height: 100px;">
+  <div style="width: 25px; height: 25px;">
     <a href="https://tailwindcss.com/" target="_blank">
       <img src="https://svgl.app/library/tailwindcss.svg" alt="Tailwind CSS" style="width: 100%; height: 100%;">
     </a>
