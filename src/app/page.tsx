@@ -1,15 +1,16 @@
 'use client';
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { env } from "@/config/env.config";
 import { useEffect, useState, useRef } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Textarea } from "@/components/ui/textarea";
 import TrashButton from '../components/custom/trash-button';
 import FloatingButtonSection from "@/components/custom/floating-button";
 import MessageContainer, { AuthorMessage } from "@/components/custom/message-container";
 import { getMessages, saveMessages } from "@/helpers/storage";
 import { ArrowUp } from "lucide-react";
+import useDeletedMessagesStore from "@/context/deletedMessages";
+import { generateText } from "@/services/geminiAPI";
+import { toast } from "sonner";
 
 export default function Home() {
 
@@ -18,49 +19,42 @@ export default function Home() {
   let [messages, setMessages] = useState<any[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const { isDeleted } = useDeletedMessagesStore();
+
   const fetchMessages = async () => {
-    await saveMessages(generatedText, 'bot');
+    if (generatedText.trim() !== "") {
+      await saveMessages(generatedText, 'bot');
+    }
     setMessages(await getMessages());
-    console.log(messages);
   };
 
   useEffect(() => {
     fetchMessages();
-  }, [generatedText]);
+  }, [generatedText, isDeleted]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   const handleGenerateText = async () => {
-    if (env.IA_API_KEY) {
-      const genAI = new GoogleGenerativeAI(env.IA_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", systemInstruction: 'Actua como una persona grosera a cada prompt, utiliza groserias, se molesto.' });
-
-      try {
-        const prompt = `${userInput}`;
-        const result = await model.generateContent(prompt);
-        setGeneratedText(result.response.text());
-      } catch (error) {
-        console.error("Error generating text:", error);
-      }
-    } else {
-      console.error("IA_API_KEY is not defined");
-    }
+    const result = await generateText(userInput);
+    if(result === null) toast.error("Sin conexión a internet")
+    setGeneratedText(result ?? "");
+    setUserInput("");
   };
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <main className="w-full h-screen flex items-center justify-center">
-      <section className="w-[80%] h-[500px] rounded-3xl border-2 overflow-auto border-black flex flex-col bg-gray-100">
-       
+    <main className="w-full h-screen flex items-center justify-center bg-gray-100">
+      <section className="w-[80%] h-[500px] lg:h-[600px] xl:h-[650px] rounded-3xl border-2 overflow-auto border-black flex flex-col bg-gray-100">
+
         {
           messages
-            .filter(message => message.message && message.message.trim() !== "")
-            .map((message, index) => (
+            .map((message: any, index: number) => (
               <MessageContainer
                 key={index}
                 text={<p className="font-sans text-black dark:text-gray-600">{message.message}</p>}
@@ -70,14 +64,14 @@ export default function Home() {
         }
         <div ref={messagesEndRef} />
 
-        <div className="w-full bg-gray-200 h-20 rounded-xl mt-auto grid grid-cols-[90%_10%]">
+        <div className="w-full bg-gray-300 h-20 rounded-xl mt-auto grid grid-cols-[90%_10%]">
           <Textarea
             value={userInput}
             onChange={(e) => {
               setUserInput(e.target.value);
             }}
             placeholder="Ingresa tu mensaje"
-            className="resize-none focus:shadow-none focus-visible:ring-0 focus-visible:border-none border-none"
+            className="placeholder:font-bold  font-bold border-black resize-none focus:shadow-none focus-visible:ring-0 focus-visible:border-black border-none"
           />
           <Button
             className="m-auto"
@@ -85,7 +79,7 @@ export default function Home() {
               handleGenerateText();
               await saveMessages(userInput, 'user');
             }}>
-            <ArrowUp/>
+            <ArrowUp />
           </Button>
         </div>
       </section>
