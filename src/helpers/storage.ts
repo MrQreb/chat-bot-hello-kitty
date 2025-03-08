@@ -11,3 +11,4 @@ export async function getMessages() {
 export function deleteMessages() {
     localStorage.removeItem("messages");
 }
+

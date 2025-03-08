@@ -1,5 +1,4 @@
 'use client';
-'use client';
 import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,12 +12,13 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import useDeletedMessagesStore from '@/context/deletedMessages';
+import { deleteMessages } from '@/helpers/storage';
 
 const TrashButton = () => {
-    const { setDeleted, isDeleted } = useDeletedMessagesStore();
+
     const handleDelete = ()  => {
-        setDeleted(!isDeleted);
+        deleteMessages();
+        window.location.reload();
     }
     return (
         <div className="border-1 rounded-md size-9 flex items-center justify-center" >

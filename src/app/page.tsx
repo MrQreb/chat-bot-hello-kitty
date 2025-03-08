@@ -1,17 +1,13 @@
 'use client';
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import TrashButton from "../components/custom/trash-button";
 import FloatingButtonSection from "@/components/custom/floating-button";
 import MessageContainer, { AuthorMessage } from "@/components/custom/message-container";
-import { deleteMessages, getMessages, saveMessages } from "@/helpers/storage";
-import { ArrowUp } from "lucide-react";
-import useDeletedMessagesStore from "@/context/deletedMessages";
+import { getMessages, saveMessages } from "@/helpers/storage";
 import { generateText } from "@/services/geminiAPI";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import SendMessageButton from "@/components/custom/send-message-button";
+import TrashButton from '../components/custom/trash-button';
 
 interface IMessage {
     message: string;
@@ -19,13 +15,11 @@ interface IMessage {
 }
 
 export default function Home() {
-    const router =  useRouter();
+
     const [generatedText, setGeneratedText] = useState("");
     const [userInput, setUserInput] = useState("");
     const [messages, setMessages] = useState<IMessage[]>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-
-    const { isDeleted } = useDeletedMessagesStore();
 
     const fetchMessages = useCallback(async () => {
         if (generatedText.trim() !== "") {
@@ -36,23 +30,33 @@ export default function Home() {
 
     useEffect(() => {
         fetchMessages();
-    }, [fetchMessages, isDeleted]);
-
-    useEffect(() => {
-        deleteMessages();
-        router.refresh();
-    }, [isDeleted])
-    
+    }, [fetchMessages]);
 
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
 
+    const checkEmptyMessage = () =>{
+        if( userInput.length !== 0) return false;
+        return true;
+    }
+    
     const handleGenerateText = async () => {
+        const messageEmpty = checkEmptyMessage();
+        if(messageEmpty) return;
+
         const result = await generateText(userInput);
         if (result === null) toast.error("Sin conexión a internet");
         setGeneratedText(result ?? "");
         setUserInput("");
+    };
+
+      const handleSendMessage = async () => {
+        const messageEmpty = checkEmptyMessage();
+        if(messageEmpty) return;
+
+        await handleGenerateText();
+        await saveMessages(userInput, "user");
     };
 
     const scrollToBottom = () => {
@@ -78,30 +82,14 @@ export default function Home() {
                     />
                 ))}
                 <div ref={messagesEndRef} />
-
-                <div className="w-full bg-gray-300 h-20 rounded-xl mt-auto grid grid-cols-[90%_10%]">
-                    <Textarea
-                        value={userInput}
-                        onChange={(e) => {
-                            setUserInput(e.target.value);
-                        }}
-                        placeholder="Ingresa tu mensaje"
-                        className="placeholder:font-bold font-bold border-black resize-none focus:shadow-none focus-visible:ring-0 focus-visible:border-black border-none"
-                    />
-                    <Button
-                        className="m-auto"
-                        onClick={async () => {
-                            handleGenerateText();
-                            await saveMessages(userInput, "user");
-                        }}
-                    >
-                        <ArrowUp />
-                    </Button>
-                </div>
+               
+                <SendMessageButton
+                    userInput={userInput}
+                    setUserInput={setUserInput}
+                    handleSendMessage={handleSendMessage}
+                />
                 
             </section>
-
-
             <FloatingButtonSection bottom="46%" right="83%">
                 <ThemeToggle />
             </FloatingButtonSection>
