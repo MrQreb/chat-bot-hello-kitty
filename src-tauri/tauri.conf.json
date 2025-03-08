@@ -7,7 +7,7 @@
     "distDir": "../out"
   },
   "package": {
-    "productName": "chatbot-app",
+    "productName": "hello kitty chat",
     "version": "0.1.0"
   },
   "tauri": {
@@ -29,7 +29,7 @@
         "icons/icon_pixel.icns",
         "icons/icon_pixel.ico"
       ],
-      "identifier": "com.tauri.chatbot",
+      "identifier": "com.tauri.hello kitty chat",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -58,7 +58,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "chatbot",
+        "title": "hello kitty chat",
         "width": 800
       }
     ]
