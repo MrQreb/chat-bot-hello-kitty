@@ -6,11 +6,12 @@ import { Textarea } from "@/components/ui/textarea";
 import TrashButton from "../components/custom/trash-button";
 import FloatingButtonSection from "@/components/custom/floating-button";
 import MessageContainer, { AuthorMessage } from "@/components/custom/message-container";
-import { getMessages, saveMessages } from "@/helpers/storage";
+import { deleteMessages, getMessages, saveMessages } from "@/helpers/storage";
 import { ArrowUp } from "lucide-react";
 import useDeletedMessagesStore from "@/context/deletedMessages";
 import { generateText } from "@/services/geminiAPI";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface IMessage {
     message: string;
@@ -18,6 +19,7 @@ interface IMessage {
 }
 
 export default function Home() {
+    const router =  useRouter();
     const [generatedText, setGeneratedText] = useState("");
     const [userInput, setUserInput] = useState("");
     const [messages, setMessages] = useState<IMessage[]>([]);
@@ -35,6 +37,12 @@ export default function Home() {
     useEffect(() => {
         fetchMessages();
     }, [fetchMessages, isDeleted]);
+
+    useEffect(() => {
+        deleteMessages();
+        router.refresh();
+    }, [isDeleted])
+    
 
     useEffect(() => {
         scrollToBottom();
@@ -90,7 +98,9 @@ export default function Home() {
                         <ArrowUp />
                     </Button>
                 </div>
+                
             </section>
+
 
             <FloatingButtonSection bottom="46%" right="83%">
                 <ThemeToggle />

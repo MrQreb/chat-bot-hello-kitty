@@ -13,13 +13,11 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { deleteMessages } from '@/helpers/storage';
 import useDeletedMessagesStore from '@/context/deletedMessages';
 
 const TrashButton = () => {
     const { setDeleted, isDeleted } = useDeletedMessagesStore();
     const handleDelete = ()  => {
-        deleteMessages();
         setDeleted(!isDeleted);
     }
     return (
@@ -32,7 +30,7 @@ const TrashButton = () => {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Deseas borrar la conversación?</AlertDialogTitle>
+                        <AlertDialogTitle>¿Deseas borrar la conversación?</AlertDialogTitle>
                         <AlertDialogDescription>
                            Esta acción eliminará todos los mensajes de la conversación
                         </AlertDialogDescription>
