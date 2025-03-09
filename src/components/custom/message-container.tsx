@@ -1,7 +1,11 @@
 "use client";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { ReactNode } from "react";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { deleteMessage } from "@/helpers/storage";
+import { useState } from 'react';
+import { Trash2 } from 'lucide-react';
 
 export enum AuthorMessage {
   bot = "bot",
@@ -11,56 +15,60 @@ export enum AuthorMessage {
 interface MessageContainerProps {
   text?: ReactNode;
   who?: string;
+  index: number;
 }
 
-const MessageContainer = ({ text, who, }: MessageContainerProps) => {
+const MessageContainer = ({ text, who, index }: MessageContainerProps) => {
+
+  const [visible, setvisible] = useState<boolean>(true);
+
+  const handleDelete = (index: number) => {
+    setvisible(false);
+    deleteMessage(index);
+  }
+  
   return (
-    <motion.div
-      initial={{ opacity: 0, x: who === AuthorMessage.bot ? -50 : 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.9, delay: 0 }}
-      className=" mt-4 m-auto w-[93%] rounded-2xl h-auto bg-message mb-4 grid grid-cols-[12%_87%] p-2"
-    >
-      {who === AuthorMessage.user && (
-        <motion.div className="w-16 h-16 bg-cinnamoroll rounded-full flex justify-center items-center"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.9,
-            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-          }}
+    <AnimatePresence>
+      { visible && (
+        <motion.div
+          initial={{ opacity: 0, x: who === AuthorMessage.bot ? -50 : 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.9, delay: 0 }}
+          className="mt-4 m-auto w-[93%] rounded-2xl h-auto bg-message mb-4 grid md:grid-cols-[12%_84%_4%] xl:grid-cols-[12%_86%_2%] p-2"
         >
-          <Image
-            src={'cinamorol.svg'}
-            alt="User avatar"
-            width={50}
-            height={50}
-            className="relative left-0 right-0 top-0 bottom-0"
-          />
-        </motion.div>
+          {who === AuthorMessage.user && (
+            <div className="w-16 h-16 bg-cinnamoroll rounded-full flex justify-center items-center">
+              <Image
+                src={"cinamorol.svg"}
+                alt="User avatar"
+                width={50}
+                height={50}
+                className="relative left-0 right-0 top-0 bottom-0"
+              />
+            </div>
+          )}
 
-
-      )}
-      {who === AuthorMessage.bot && (
-        <motion.div className="w-16 h-16 bg-kitty rounded-full"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.9,
-            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-          }}
-        >
-          <Image
-            src={'hello_kitty.svg'}
-            alt="User avatar"
-            width={120}
-            height={120}
-            className="relative left-0 right-0 top-0 bottom-0"
-          />
+          {who === AuthorMessage.bot && (
+            <div className="w-16 h-16 bg-kitty rounded-full">
+              <Image
+                src={"hello_kitty.svg"}
+                alt="User avatar"
+                width={120}
+                height={120}
+                className="relative left-0 right-0 top-0 bottom-0"
+              />
+            </div>
+          )}
+          <div className="ml-5 xl:ml-[-22] 2xl:ml-[-80] text-gray-800 dark:text-gray-300">
+            {text}
+          </div>
+          <Button onClick={() => handleDelete(index)} className="size-6 md:size-7 self-end cursor-pointer bg-background-trash hover:bg-send-message hover:scale-125 transition-all" >
+            <Trash2/>
+          </Button>
         </motion.div>
       )}
-      <div className="ml-5 xl:ml-[-22] 2xl:ml-[-80] text-gray-800 dark:text-gray-300">{text}</div>
-    </motion.div>
-  );
-};
+    </AnimatePresence>
+  )
+}
 export default MessageContainer;

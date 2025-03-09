@@ -70,6 +70,7 @@ export default function Home() {
                 {messages.map((message: IMessage, index: number) => (
                     <MessageContainer
                         key={index}
+                        index={index}
                         text={
                             <p className="font-sans text-black dark:text-gray-600">
                                 {message.message}
