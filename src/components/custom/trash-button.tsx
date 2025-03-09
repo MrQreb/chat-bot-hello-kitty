@@ -21,11 +21,11 @@ const TrashButton = () => {
         window.location.reload();
     }
     return (
-        <div className="border-1 rounded-md size-9 flex items-center justify-center" >
+        <div className="size-9 flex items-center justify-center" >
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant="outline" size="icon">
-                        <Trash2 />
+                    <Button variant="outline" className='bg-background-trash md:size-11 xl:size-14 border-black border rounded-2xl hover:bg-send-message' size="icon">
+                        <Trash2 color='white' className='md:size-5 xl:size-6'/>
                     </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>

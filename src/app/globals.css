@@ -9,6 +9,15 @@ html, body {
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-layout: #FFBCE9;
+  --color-chat: #F3C1E2;
+  --color-message: #F1D4EA;
+  --color-cinnamoroll: #B1C9F6;
+  --color-kitty: #D6A5EA;
+  --color-message-container: #ECBCE7;
+  --color-background-trash: #D175BA;
+  --color-send-message: #6F326A;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -128,3 +137,10 @@ html, body {
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+
+
+

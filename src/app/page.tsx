@@ -1,5 +1,4 @@
 'use client';
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useCallback, useEffect, useRef, useState } from "react";
 import FloatingButtonSection from "@/components/custom/floating-button";
 import MessageContainer, { AuthorMessage } from "@/components/custom/message-container";
@@ -8,6 +7,8 @@ import { generateText } from "@/services/geminiAPI";
 import { toast } from "sonner";
 import SendMessageButton from "@/components/custom/send-message-button";
 import TrashButton from '../components/custom/trash-button';
+import Image from 'next/image';
+import { motion } from "framer-motion";
 
 interface IMessage {
     message: string;
@@ -36,14 +37,14 @@ export default function Home() {
         scrollToBottom();
     }, [messages]);
 
-    const checkEmptyMessage = () =>{
-        if( userInput.length !== 0) return false;
+    const checkEmptyMessage = () => {
+        if (userInput.length !== 0) return false;
         return true;
     }
-    
+
     const handleGenerateText = async () => {
         const messageEmpty = checkEmptyMessage();
-        if(messageEmpty) return;
+        if (messageEmpty) return;
 
         const result = await generateText(userInput);
         if (result === null) toast.error("Sin conexión a internet");
@@ -51,9 +52,9 @@ export default function Home() {
         setUserInput("");
     };
 
-      const handleSendMessage = async () => {
+    const handleSendMessage = async () => {
         const messageEmpty = checkEmptyMessage();
-        if(messageEmpty) return;
+        if (messageEmpty) return;
 
         await handleGenerateText();
         await saveMessages(userInput, "user");
@@ -64,8 +65,8 @@ export default function Home() {
     };
 
     return (
-        <main className="w-full h-screen flex items-center justify-center bg-gray-100">
-            <section className="w-[80%] h-[500px] lg:h-[600px] xl:h-[650px] rounded-3xl border-2 overflow-auto border-black flex flex-col bg-gray-100">
+        <main className="w-full h-screen flex items-center justify-center bg-layout">
+            <section className="w-[80%] h-[350px] lg:h-[500px] xl:h-[550px] rounded-3xl border-2 overflow-auto  flex flex-col bg-chat">
                 {messages.map((message: IMessage, index: number) => (
                     <MessageContainer
                         key={index}
@@ -82,20 +83,88 @@ export default function Home() {
                     />
                 ))}
                 <div ref={messagesEndRef} />
-               
+
                 <SendMessageButton
                     userInput={userInput}
                     setUserInput={setUserInput}
                     handleSendMessage={handleSendMessage}
                 />
-                
             </section>
-            <FloatingButtonSection bottom="46%" right="83%">
-                <ThemeToggle />
+            
+            {/* FLoating things  */}
+            <FloatingButtonSection className="top-[6%] left-[4%]">
+                <TrashButton />
             </FloatingButtonSection>
 
-            <FloatingButtonSection bottom="46%" right="82%">
-                <TrashButton />
+            <FloatingButtonSection className="top-[-1%] right-0">
+                <motion.div
+                    animate={{ x: [0, -40, 0] , y: [0,-30,0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                >
+                    <Image
+                        src={'sun.svg'}
+                        alt="User avatar"
+                        width={100}
+                        height={100}
+                        className="relative size-20 xl:size-32"
+                    />
+                </motion.div>
+
+            </FloatingButtonSection>
+
+            <FloatingButtonSection className="bottom-[-1%] left-0">
+                <motion.div
+                    animate={{ x: [0, 100, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                >
+                    <div>
+                        <Image
+                            src={'cloud.svg'}
+                            alt="User avatar"
+                            width={100}
+                            height={100}
+                            className="relative size-20 xl:size-32"
+                        />
+                    </div>
+                </motion.div>
+            </FloatingButtonSection>
+
+            <FloatingButtonSection className="bottom-[-1%] right-0">
+                <motion.div
+                    animate={{ x: [0, -100, 0]}}
+                    transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                >                    <Image
+                        src={'cloud.svg'}
+                        alt="User avatar"
+                        width={100}
+                        height={100}
+                        className="relative size-20 xl:size-32"
+                    />
+                </motion.div>
+            </FloatingButtonSection>
+
+            <FloatingButtonSection className="bottom-[-2%] left-[40%] xl:left-[44%]">
+                <div>
+                    <Image
+                        src={'popom_purim.svg'}
+                        alt="User avatar"
+                        width={100}
+                        height={100}
+                        className="size-20 xl:size-40"
+                    />
+                </div>
+            </FloatingButtonSection>
+
+            <FloatingButtonSection className="bottom-[2.5%] xl:bottom-[2%] right-[44%] xl:right-[45%]">
+                <div>
+                    <Image
+                        src={'my_melody.svg'}
+                        alt="User avatar"
+                        width={10}
+                        height={10}
+                        className="size-10  xl:size-20"
+                    />
+                </div>
             </FloatingButtonSection>
         </main>
     );

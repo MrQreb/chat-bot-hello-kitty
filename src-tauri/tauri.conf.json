@@ -29,7 +29,7 @@
         "icons/icon_pixel.icns",
         "icons/icon_pixel.ico"
       ],
-      "identifier": "com.tauri.hello kitty chat",
+      "identifier": "com.tauri.hello-kitty-chat",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

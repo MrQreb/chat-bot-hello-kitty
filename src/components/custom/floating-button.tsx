@@ -3,13 +3,12 @@ import { ReactNode } from "react";
 
 interface FloatingButtonSectionProps {
   children: ReactNode;
-  bottom: string;
-  right: string;
+  className?: string;
 }
 
-const FloatingButtonSection = ({ children, bottom, right }: FloatingButtonSectionProps) => {
+const FloatingButtonSection = ({ children, className = "" }: FloatingButtonSectionProps) => {
   return (
-    <section style={{ position: 'relative', bottom: bottom, right: right }}>
+    <section className={`fixed ${className}`}>
       {children}
     </section>
   );
