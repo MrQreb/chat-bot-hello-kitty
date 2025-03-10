@@ -1,14 +1,16 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from "react";
-import FloatingButtonSection from "@/components/custom/floating-button";
-import MessageContainer, { AuthorMessage } from "@/components/custom/message-container";
-import { getMessages, saveMessages } from "@/helpers/storage";
-import { generateText } from "@/services/geminiAPI";
-import { toast } from "sonner";
-import SendMessageButton from "@/components/custom/send-message-button";
-import TrashButton from '../components/custom/trash-button';
 import Image from 'next/image';
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { generateText } from "@/services/geminiAPI";
+import FloatingButtonSection from "@/components/custom/floating-button";
+import MessageContainer, { AuthorMessage } from "@/components/custom/message-container";
+import SendMessageButton from "@/components/custom/send-message-button";
+import TrashButton from '../components/custom/trash-button';
+import { getMessages, saveMessages } from "@/helpers/storage";
+import MainContainer from "@/components/custom/main-container";
+import ChatContainer from "@/components/custom/chat-container";
 
 interface IMessage {
     message: string;
@@ -65,8 +67,8 @@ export default function Home() {
     };
 
     return (
-        <main className="w-full h-screen flex items-center justify-center bg-layout">
-            <section className="w-[80%] h-[350px] lg:h-[500px] xl:h-[550px] rounded-3xl border-2 overflow-auto  flex flex-col bg-chat">
+        <MainContainer>
+            <ChatContainer>
                 {messages.map((message: IMessage, index: number) => (
                     <MessageContainer
                         key={index}
@@ -90,7 +92,7 @@ export default function Home() {
                     setUserInput={setUserInput}
                     handleSendMessage={handleSendMessage}
                 />
-            </section>
+            </ChatContainer>
             
             {/* FLoating things  */}
             <FloatingButtonSection className="top-[6%] left-[4%]">
@@ -167,6 +169,6 @@ export default function Home() {
                     />
                 </div>
             </FloatingButtonSection>
-        </main>
+        </MainContainer>
     );
 }

@@ -38,7 +38,7 @@ const MessageContainer = ({ text, who, index }: MessageContainerProps) => {
           className="mt-4 m-auto w-[93%] rounded-2xl h-auto bg-message mb-4 grid md:grid-cols-[12%_84%_4%] xl:grid-cols-[12%_86%_2%] p-2"
         >
           {who === AuthorMessage.user && (
-            <div className="w-16 h-16 bg-cinnamoroll rounded-full flex justify-center items-center">
+            <div className="w-16 h-16 bg-cinnamoroll rounded-full flex justify-center items-center hover:scale-115 transition-all">
               <Image
                 src={"cinamorol.svg"}
                 alt="User avatar"
@@ -50,7 +50,7 @@ const MessageContainer = ({ text, who, index }: MessageContainerProps) => {
           )}
 
           {who === AuthorMessage.bot && (
-            <div className="w-16 h-16 bg-kitty rounded-full">
+            <div className="w-16 h-16 bg-kitty rounded-full hover:scale-115 transition-all">
               <Image
                 src={"hello_kitty.svg"}
                 alt="User avatar"
@@ -60,7 +60,7 @@ const MessageContainer = ({ text, who, index }: MessageContainerProps) => {
               />
             </div>
           )}
-          <div className="ml-5 xl:ml-[-22] 2xl:ml-[-80] text-gray-800 dark:text-gray-300">
+          <div className="text-base xl:text-xl ml-5 xl:ml-[-22] 2xl:ml-[-80] text-gray-800 dark:text-gray-300">
             {text}
           </div>
           <Button onClick={() => handleDelete(index)} className="size-6 md:size-7 self-end cursor-pointer bg-background-trash hover:bg-send-message hover:scale-125 transition-all" >

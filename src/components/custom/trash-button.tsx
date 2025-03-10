@@ -28,16 +28,16 @@ const TrashButton = () => {
                         <Trash2 color='white' className='md:size-5 xl:size-6'/>
                     </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className='bg-message'>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>¿Deseas borrar la conversación?</AlertDialogTitle>
+                        <AlertDialogTitle className='font-bold'>¿Deseas borrar la kitty conversación?</AlertDialogTitle>
                         <AlertDialogDescription>
-                           Esta acción eliminará todos los mensajes de la conversación
+                           Esta acción eliminará todos los kitty mensajes
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleDelete}>Aceptar</AlertDialogAction>
+                        <AlertDialogCancel className='bg-layout text-white font-semibold transition-all hover:bg-red-500 hover:scale-110 hover:text-white'>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete} className='bg-background-trash text-white transition-all hover:bg-red-500 hover:scale-110 hover:text-white'>Aceptar</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

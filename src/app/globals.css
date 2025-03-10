@@ -5,6 +5,7 @@ html, body {
 }
 
 @plugin "tailwindcss-animate";
+@plugin "tailwind-scrollbar";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -139,6 +140,9 @@ html, body {
 }
 
 
+.scroll-kitty {
+  @apply scrollbar-thin scrollbar-track-message scrollbar-thumb-kitty;
+}
 
 
 
