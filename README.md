@@ -3,9 +3,9 @@
 ## Requirements
 
 - Nodejs 22.x 
-- Prerequisistes of ***tauri*** ***https://v1.tauri.app/v1/guides/getting-started/prerequisites/***
+- Prerequisites of ***tauri*** [Tauri Docs](https://v1.tauri.app/v1/guides/getting-started/prerequisites/)
 - Install npm depedencies ```yarn install```
-- Get gemini api key ***https://ai.google.dev/gemini-api/docs/api-key***
+- [Get gemmini api key](https://ai.google.dev/gemini-api/docs/api-key)
 
 ## Run dev server 
 
@@ -47,3 +47,7 @@ yarn tauri build
     </a>
   </div>
 </div>
+
+## Libraries used
+- [Tailwind Scrollbar](https://www.npmjs.com/package/tailwind-scrollbar)
+- [Frammer Motion](https://motion.dev/docs)
