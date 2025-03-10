@@ -21,7 +21,7 @@ const TrashButton = () => {
         window.location.reload();
     }
     return (
-        <div className="size-9 flex items-center justify-center" >
+        <div className="size-9 flex items-center justify-center transition-all hover:scale-115" >
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button variant="outline" className='bg-background-trash md:size-11 xl:size-14 border-black border rounded-2xl hover:bg-send-message' size="icon">
